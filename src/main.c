@@ -131,6 +131,8 @@ void write_character_with_delay(uint8_t character, uint16_t delay) {
 void display_message(char *user_message, uint16_t delay_time) {
     struct BinaryAlphabet binary_alphabet;
 
+    int bit_position = 7;
+
     init_binary_alphabet(&binary_alphabet);
 
     //user_message = (char *)malloc(strlen(user_message) + 1);
@@ -138,7 +140,7 @@ void display_message(char *user_message, uint16_t delay_time) {
     for(int i = 0; user_message[i] != '\0'; i++) {
         switch(user_message[i]) {
             case 'a':
-                write_character_with_delay(0b00000010, delay_time);
+                write_character_with_delay(binary_alphabet.A, delay_time);
                 break;
             case 'b':
                 write_character_with_delay(binary_alphabet.B, delay_time);
@@ -155,7 +157,6 @@ void display_message(char *user_message, uint16_t delay_time) {
                 write_character_with_delay(binary_alphabet.L, delay_time);
                 break;
              case 'k':
-                write_character_with_delay(0b10000000, delay_time);
                 break;
             case ' ':
                 write_character_with_delay(binary_alphabet.white_space, delay_time);
@@ -168,7 +169,7 @@ int main(void) {
     uint16_t delay = 65535 / 1;
     spi_init();
     for(;;){
-        display_message("a", delay);
+        display_message("hello", delay);
 
         //for (uint16_t i = 0; i < delay; i++){
             //           FABGCDE
