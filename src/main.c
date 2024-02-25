@@ -138,7 +138,7 @@ void display_message(char *user_message, uint16_t delay_time) {
     for(int i = 0; user_message[i] != '\0'; i++) {
         switch(user_message[i]) {
             case 'a':
-                write_character_with_delay(binary_alphabet.A, delay_time);
+                write_character_with_delay(0b00000010, delay_time);
                 break;
             case 'b':
                 write_character_with_delay(binary_alphabet.B, delay_time);
@@ -154,6 +154,9 @@ void display_message(char *user_message, uint16_t delay_time) {
              case 'l':
                 write_character_with_delay(binary_alphabet.L, delay_time);
                 break;
+             case 'k':
+                write_character_with_delay(0b10000000, delay_time);
+                break;
             case ' ':
                 write_character_with_delay(binary_alphabet.white_space, delay_time);
                 break;
@@ -162,10 +165,10 @@ void display_message(char *user_message, uint16_t delay_time) {
 }
 
 int main(void) {
-    uint16_t delay = 65535/2;
+    uint16_t delay = 65535 / 1;
     spi_init();
     for(;;){
-        display_message("b", delay);
+        display_message("a", delay);
 
         //for (uint16_t i = 0; i < delay; i++){
             //           FABGCDE
