@@ -48,7 +48,7 @@ void init_binary_alphabet(struct BinaryAlphabet *binary_alphabet) {
 }
 
 void start_blink(int pin_one, int pin_two, size_t duration) {
-    if(pin_one == NULL || pin_two == NULL) {
+    if(pin_one == 0 || pin_two == 0) {
         exit(-1);
     }
     else {
