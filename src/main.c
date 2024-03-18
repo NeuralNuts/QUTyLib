@@ -16,12 +16,12 @@
 #define DELAY_BASE 30
 #define DELAY_BASE_HALF 60 / 4
 
-struct MidiNote {
+struct Note {
     float freq;
     int duration;
 };
 
-struct MidiNote midi_notes[] = {};
+struct Note notes[] = {};
 
 #define NUM_PWM_CHANNELS 2 // Number of PWM channels to use
 
@@ -46,11 +46,11 @@ void tca_init(uint16_t freq, uint16_t duration) {
 }
 
 void tcb_init(uint16_t freq, uint16_t duration) {
-    TCB0.CTRLA = TCB_CLKSEL_DIV1_gc; // Set clock source (clk_per/1)
-    TCB0.CCMP = freq / 2; // Set compare value for PWM duty cycle
-    TCB0.CTRLB = TCB_CCMPEN_bm | TCB_CNTMODE_PWM8_gc; // Enable PWM and set 8-bit PWM mode
+    TCB0.CTRLA = TCB_CLKSEL_DIV1_gc; 
+    TCB0.CCMP = freq / 2; 
+    TCB0.CTRLB = TCB_CCMPEN_bm | TCB_CNTMODE_PWM8_gc;
 
-    non_const_delay(duration); // Delay
+    non_const_delay(duration);
 }
 
 ISR(TCA0_OVF_vect) {
@@ -73,7 +73,7 @@ int main() {
     sei();
 
     while(1) {
-        int num_notes = sizeof(midi_notes) / sizeof(midi_notes[0]);
+        int num_notes = sizeof(notes) / sizeof(notes[0]);
 
         for (int i = 0; i < num_notes; i++) {
             //play_note(0, midi_notes[i].freq, midi_notes[i].duration);
