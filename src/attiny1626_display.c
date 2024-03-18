@@ -1,12 +1,15 @@
+// ATTINY1626 lib
 #include <avr/io.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
 
+// std lib
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
 
+// My files
 #include "attiny1626_display.h"
 
 #define BLINK_RAPID 5000000 * 2
@@ -64,9 +67,6 @@ void start_blink(int pin_one, int pin_two, size_t duration) {
 }
 
 void spi_init(void) {
-    // Disable global interrupts
-    // cli();
-
     SPI0.CTRLB = SPI_SSD_bm;
 
     PORTB.DIRSET = PIN1_bm;
@@ -75,13 +75,9 @@ void spi_init(void) {
     PORTA.DIRSET = PIN1_bm;
 
     PORTMUX.SPIROUTEA = PORTMUX_SPI0_ALT1_gc;
-    PORTC.DIR |= (PIN0_bm | PIN2_bm); // Set SCK (PC0) and MOSI (PC2) as outputs
+    PORTC.DIR |= (PIN0_bm | PIN2_bm);
 
-    SPI0.CTRLA = SPI_MASTER_bm | SPI_CLK2X_bm | SPI_PRESC_DIV4_gc | SPI_ENABLE_bm;
-    // Master, double speed, /4 prescaler, MSB first, enable SPI
-
-    // Enable global interrupts
-    // sei();
+    SPI0.CTRLA = SPI_MASTER_bm | SPI_CLK2X_bm | SPI_PRESC_DIV4_gc | SPI_ENABLE_bm; // Master, double speed, /4 prescaler, MSB first, enable SPI
 }
 
 void spi_write(int bytes){
